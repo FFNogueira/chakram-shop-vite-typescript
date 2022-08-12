@@ -9,12 +9,12 @@ import { selectUserLoginStatus } from './store/user-login-status/selector';
 import { ILocation } from './interfaces';
 
 // Interface de tipos:
-interface Props {
+interface IProps {
   prevPath: string;
   myElement: ReactElement;
 }
 
-function ProtectedRoute(props: Props) {
+function ProtectedRoute(props: IProps) {
   const { prevPath, myElement } = props;
   // verifica se há usuário logado:
   const { currentUser } = useSelector(selectUserLoginStatus);

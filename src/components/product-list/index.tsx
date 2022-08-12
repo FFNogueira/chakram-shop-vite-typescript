@@ -18,12 +18,10 @@ interface IProps {
   itemList: ItemList;
 }
 
-function ProductList(props: IProps) {
+function ProductList({ itemList }: IProps) {
   const dispatch = useDispatch();
   const { cartItens } = useSelector(selectShoppingCart);
-  const {
-    itemList: { title, items, id },
-  } = props;
+  const { title, items, id } = itemList;
 
   const handleAddItemToCart = (item: Item) => {
     const { name, imageUrl, price } = item;

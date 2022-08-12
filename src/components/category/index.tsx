@@ -10,10 +10,8 @@ interface IProps {
   };
 }
 
-function Category(props: IProps) {
-  const {
-    properties: { name, className, imgSrc },
-  } = props;
+function Category({ properties }: IProps) {
+  const { name, className, imgSrc } = properties;
 
   return (
     <Link to={`/products#${className}`} className={className}>

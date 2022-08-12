@@ -13,7 +13,7 @@ const INITIAL_STATE = {
 
 // Reducer deste contexto:
 export const userLoginStatusReducer = (
-  state = INITIAL_STATE,
+  state: null | object = INITIAL_STATE,
   action: Action,
 ) => {
   const { type, payload } = action;
