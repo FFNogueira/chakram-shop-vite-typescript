@@ -1,17 +1,11 @@
 // Criador de selectors
 import { createSelector } from 'reselect';
-
-// Interface de tipo:
-interface CartItem {
-  itemName: string;
-  imgURL: string;
-  units: number;
-  unitPrice: number;
-}
+// interfaces de tipo:
+import { ICartItem } from '../../interfaces';
 
 interface IRootReducerState {
   shoppingCart: {
-    cartItens: CartItem[];
+    cartItens: ICartItem[];
   };
 }
 

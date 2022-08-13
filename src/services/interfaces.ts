@@ -39,3 +39,15 @@ export interface IUserData {
 export interface IUser {
   user: IUserData;
 }
+
+export interface ILoginStatus {
+  currentUser: object | null;
+}
+
+// Interface de tipo:
+export interface ICartItem {
+  itemName: string;
+  imgURL: string;
+  units: number;
+  unitPrice: number;
+}

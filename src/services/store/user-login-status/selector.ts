@@ -1,11 +1,10 @@
 // Criador de selectors
 import { createSelector } from 'reselect';
-
 // Interface de tipo:
+import { ILoginStatus } from '../../interfaces';
+
 interface IRootReducerState {
-  userLoginStatus: {
-    currentUser: object | null;
-  };
+  userLoginStatus: ILoginStatus;
 }
 
 // BLUEPRINT DO SELETOR DO REDUCER:
