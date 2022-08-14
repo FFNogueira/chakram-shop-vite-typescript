@@ -1,12 +1,7 @@
 // Tipos de ação suportadas por este reducer:
 import { ACTION_TYPES } from './action-types';
 // interfaces de tipo:
-import { ILoginStatus } from '../../interfaces';
-
-interface IAction {
-  type: string;
-  payload: object;
-}
+import { ILoginStatus, IAction, TUser } from '../../interfaces';
 
 // Valor inicial das variáveis de estado global:
 const INITIAL_STATE: ILoginStatus = {
@@ -16,7 +11,7 @@ const INITIAL_STATE: ILoginStatus = {
 // Reducer deste contexto:
 export const userLoginStatusReducer = (
   state = INITIAL_STATE,
-  action: IAction,
+  action: IAction<TUser>,
 ) => {
   const { type, payload } = action;
   // ação a ser tomada (dependendo do tipo de ação):

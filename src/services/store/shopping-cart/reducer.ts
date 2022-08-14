@@ -1,12 +1,7 @@
 // Tipos de ação suportadas por este reducer:
 import { ACTION_TYPES } from './action-types';
 // interfaces de tipo:
-import { ICartItem } from '../../interfaces';
-
-interface IAction {
-  type: string;
-  payload: ICartItem[];
-}
+import { ICartItem, IAction } from '../../interfaces';
 
 interface ICart {
   cartItens: ICartItem[] | null;
@@ -18,7 +13,10 @@ const INITIAL_STATE: ICart = {
 };
 
 // Reducer deste contexto:
-export const shoppingCartReducer = (state = INITIAL_STATE, action: IAction) => {
+export const shoppingCartReducer = (
+  state = INITIAL_STATE,
+  action: IAction<ICartItem[]>,
+) => {
   const { type, payload } = action;
   // ação a ser tomada (dependendo do tipo de ação):
   switch (type) {

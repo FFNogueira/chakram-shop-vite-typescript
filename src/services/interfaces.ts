@@ -40,14 +40,20 @@ export interface IUser {
   user: IUserData;
 }
 
+export type TUser = object | null;
+
 export interface ILoginStatus {
-  currentUser: object | null;
+  currentUser: TUser;
 }
 
-// Interface de tipo:
 export interface ICartItem {
   itemName: string;
   imgURL: string;
   units: number;
   unitPrice: number;
+}
+
+export interface IAction<P> {
+  type: string;
+  payload: P;
 }

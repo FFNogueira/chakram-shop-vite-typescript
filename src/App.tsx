@@ -17,6 +17,8 @@ import LoadingScreen from './components/loading-screen';
 import { onAuthStateChangedListener } from './services/firebase';
 // ações utilizadas por este componente:
 import { setCurrentUser } from './services/store/user-login-status/actions';
+// interfaces de tipo:
+import { TUser } from './services/interfaces';
 
 function App() {
   // Hook Disparador de ações:
@@ -24,7 +26,7 @@ function App() {
   // Executa o observador de mudança de estado de login...
   // ...sempre que o app montar:
   React.useEffect(() => {
-    const unsubscribe = onAuthStateChangedListener((user: object | null) => {
+    const unsubscribe = onAuthStateChangedListener((user: TUser) => {
       // seta o usuário atual em uma variável de estado golbal:
       dispatch(setCurrentUser(user));
     });
