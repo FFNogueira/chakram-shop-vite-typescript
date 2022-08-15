@@ -5,6 +5,13 @@ export interface ILocation {
   };
 }
 
+export interface ICartItem {
+  itemName: string;
+  imgURL: string;
+  units: number;
+  unitPrice: number;
+}
+
 export interface Item {
   id: number;
   imageUrl: string;
@@ -27,26 +34,15 @@ export interface SignProps {
 
 export interface IUserData {
   uid: string;
-  displayName?: string;
-  photoURL?: string;
-  email: string;
-}
-
-export interface IUser {
-  user: IUserData;
+  displayName: string | null;
+  photoURL: string | null;
+  email: string | null;
 }
 
 export type TUser = IUserData | null;
 
 export interface ILoginStatus {
   currentUser: TUser;
-}
-
-export interface ICartItem {
-  itemName: string;
-  imgURL: string;
-  units: number;
-  unitPrice: number;
 }
 
 export interface IAction<P> {

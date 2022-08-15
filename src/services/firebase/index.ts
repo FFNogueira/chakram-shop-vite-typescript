@@ -123,7 +123,7 @@ export async function createUserDocument(
     // ...então crie um novo:
     let { displayName, photoURL } = logedUser;
     const { email } = logedUser;
-    if (!displayName) displayName = username;
+    if (!displayName && username) displayName = username;
     if (!photoURL) photoURL = '';
     const createdAt = new Date();
     await setDoc(docRef, { email, displayName, photoURL, createdAt });
@@ -150,7 +150,7 @@ export const signOutUser = async () => {
 // Observador de eventos de mudança de estado de login:
 // ===================================================
 export const onAuthStateChangedListener = (callback: (arg: TUser) => void) =>
-  onAuthStateChanged(auth, callback as any);
+  onAuthStateChanged(auth, callback);
 // ==========================================
 // Obtém todos os documentos de uma coleção:
 // ==========================================

@@ -1,5 +1,7 @@
 // interfaces de tipo:
-interface Item {
+import { ICartItem } from '../services/interfaces';
+
+interface IItemWithOptionalProperties {
   itemName: string;
   imgURL?: string;
   units?: number;
@@ -7,8 +9,8 @@ interface Item {
 }
 
 const manageShoppingCartItens = (
-  cartItens: Item[],
-  itemToBeHandled: Item,
+  cartItens: ICartItem[],
+  itemToBeHandled: IItemWithOptionalProperties,
   unitsToTemove?: number,
 ) => {
   let newCart = [...cartItens];
@@ -20,20 +22,20 @@ const manageShoppingCartItens = (
   if (itemIndex < 0) {
     newCart.push({
       itemName: itemToBeHandled.itemName,
-      imgURL: itemToBeHandled.imgURL,
+      imgURL: itemToBeHandled.imgURL as string,
       units: 1,
-      unitPrice: itemToBeHandled.unitPrice,
+      unitPrice: itemToBeHandled.unitPrice as number,
     });
   }
   // SENÃO, SE O ITEM JÁ EXISTE:
   // se deseja remover itens:
   else if (unitsToTemove) {
-    (newCart[itemIndex].units as number) -= unitsToTemove;
+    newCart[itemIndex].units -= unitsToTemove;
     // limpe do carrinho todo produto com 0 unidades:
-    newCart = newCart.filter((item) => (item.units as number) > 0);
+    newCart = newCart.filter((item) => item.units > 0);
   } else {
     // senão, adicione uma unidade:
-    (newCart[itemIndex].units as number) += 1;
+    newCart[itemIndex].units += 1;
   }
   // console.log(newCart); // DEBUG!!!!!!!!!
   // salva carrinho no localStorage:

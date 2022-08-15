@@ -11,7 +11,7 @@ import {
 // mensageiro toastify:
 import sendToast from '../../modules/send-toast';
 // interfaces de tipo:
-import { SignProps, IUser } from '../../services/interfaces';
+import { SignProps } from '../../services/interfaces';
 
 function RegisterForm(props: SignProps) {
   // hook redirecionador:
@@ -58,10 +58,7 @@ function RegisterForm(props: SignProps) {
         // tente criar um documento na coleção 'users'...
         // ...(apenas se este usuário...
         // ...já não esiver cadastrado):
-        const doc = await createUserDocument(
-          (registerData as IUser).user,
-          username,
-        );
+        const doc = await createUserDocument(registerData.user, username);
         // se houve erros na etapa anterior:
 
         if ('errors' in doc) {

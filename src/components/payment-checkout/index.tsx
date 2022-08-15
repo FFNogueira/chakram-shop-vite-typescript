@@ -13,8 +13,6 @@ import sendToast from '../../modules/send-toast';
 import { PaymentContainer } from './style';
 // Serviços do firebase:
 import { getUserDocument } from '../../services/firebase';
-// interfaces de tipo:
-import { IUserData } from '../../services/interfaces';
 
 interface IProps {
   amount: number;
@@ -68,8 +66,8 @@ function PaymentCheckout(props: IProps) {
         payment_method: {
           card: elements.getElement(CardElement) || { token: '' },
           billing_details: {
-            name: (userData as IUserData).displayName,
-            email: (userData as IUserData).email,
+            name: userData?.displayName || '',
+            email: userData?.email || '',
           },
         },
       });
