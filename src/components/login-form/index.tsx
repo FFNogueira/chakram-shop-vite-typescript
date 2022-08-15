@@ -13,7 +13,7 @@ import {
 // mensageiro toastify:
 import sendToast from '../../modules/send-toast';
 // interfaces de tipo:
-import { SignProps, IErrorData, IUser } from '../../services/interfaces';
+import { SignProps, IUser } from '../../services/interfaces';
 
 function LoginForm(props: SignProps) {
   // hook redirecionador:
@@ -35,8 +35,8 @@ function LoginForm(props: SignProps) {
       // ...já não esiver cadastrado):
       const doc = await createUserDocument((loginData as IUser).user);
       // se ocorreu erros na criação do novo usuário:
-      if ((doc as IErrorData).errors) {
-        sendToast('error', (doc as IErrorData).errors[0]);
+      if ('errors' in doc) {
+        sendToast('error', doc.errors[0]);
       } else {
         sendToast('success', 'Logado com sucesso!', 4000);
         // redirecionar para outra página:
@@ -57,8 +57,8 @@ function LoginForm(props: SignProps) {
       // tenta fazer login usando email e senha:
       const loginData = await signInUsingEmailandPassword(email, password);
       // se houve algum erro:
-      if ((loginData as IErrorData).errors) {
-        sendToast('error', (loginData as IErrorData).errors[0]);
+      if ('errors' in loginData) {
+        sendToast('error', loginData.errors[0]);
       }
       // Se deu tudo certo:
       else {

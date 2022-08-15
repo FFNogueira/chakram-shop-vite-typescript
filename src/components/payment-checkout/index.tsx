@@ -14,7 +14,7 @@ import { PaymentContainer } from './style';
 // Serviços do firebase:
 import { getUserDocument } from '../../services/firebase';
 // interfaces de tipo:
-import { IUserData, IErrorData } from '../../services/interfaces';
+import { IUserData } from '../../services/interfaces';
 
 interface IProps {
   amount: number;
@@ -48,10 +48,9 @@ function PaymentCheckout(props: IProps) {
       // Continue apenas se o componente de pagamento estiver pronto
       if (!stripe || !elements) return null;
       // Tenta obter os dados de registro do usuário:
-      const userData = await getUserDocument(currentUser as IUserData);
+      const userData = await getUserDocument(currentUser);
       // Continue apenas se não houve erros na obtenção dos dados:
-      if ((userData as IErrorData).errors)
-        return sendToast('error', (userData as IErrorData).errors[0]);
+      if (userData?.errors) return sendToast('error', userData.errors[0]);
       // Faz a requisição de Pagamento:
       const response = await fetch('/.netlify/functions/tryToPay', {
         method: 'post',

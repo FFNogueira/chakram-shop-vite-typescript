@@ -25,10 +25,6 @@ export interface SignProps {
   data?: object;
 }
 
-export interface IErrorData {
-  errors: string[];
-}
-
 export interface IUserData {
   uid: string;
   displayName?: string;
@@ -40,7 +36,7 @@ export interface IUser {
   user: IUserData;
 }
 
-export type TUser = object | null;
+export type TUser = IUserData | null;
 
 export interface ILoginStatus {
   currentUser: TUser;

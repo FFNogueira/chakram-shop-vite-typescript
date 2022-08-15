@@ -11,7 +11,7 @@ import {
 // mensageiro toastify:
 import sendToast from '../../modules/send-toast';
 // interfaces de tipo:
-import { SignProps, IErrorData, IUser } from '../../services/interfaces';
+import { SignProps, IUser } from '../../services/interfaces';
 
 function RegisterForm(props: SignProps) {
   // hook redirecionador:
@@ -35,21 +35,23 @@ function RegisterForm(props: SignProps) {
         username,
       );
       // se houve algum erro:
-      if ((registerData as IErrorData).errors?.length > 1) {
-        // enviar toast com 2 ou mais erros!!
-        sendToast(
-          'error',
-          <>
-            {(registerData as IErrorData).errors.map((e) => (
-              <p key={e}>
-                <span>⇛</span> {e}
-              </p>
-            ))}
-          </>,
-        );
-      } else if ((registerData as IErrorData).errors?.length === 1) {
-        // enviar toast com apenas 1 erro!!
-        sendToast('error', (registerData as IErrorData).errors[0]);
+      if ('errors' in registerData) {
+        if (registerData.errors.length > 1) {
+          // enviar toast com 2 ou mais erros!!
+          sendToast(
+            'error',
+            <>
+              {registerData.errors.map((e) => (
+                <p key={e}>
+                  <span>⇛</span> {e}
+                </p>
+              ))}
+            </>,
+          );
+        } else {
+          // enviar toast com apenas 1 erro!!
+          sendToast('error', registerData.errors[0]);
+        }
       }
       // Se deu tudo certo (sem erros):
       else {
@@ -62,8 +64,8 @@ function RegisterForm(props: SignProps) {
         );
         // se houve erros na etapa anterior:
 
-        if ((doc as IErrorData).errors) {
-          sendToast('error', (doc as IErrorData).errors[0]);
+        if ('errors' in doc) {
+          sendToast('error', doc.errors[0]);
         }
         // Se deu tudo certo:
         else {

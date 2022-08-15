@@ -25,8 +25,8 @@ import firebaseConfig from './firebase-config';
 // Validações de email, senha e nome de usuário:
 import validations from '../../modules/validations';
 // interfaces de tipo:
-import { ItemList, IUserData } from '../interfaces';
-// interfaces de tipo:
+import { ItemList, IUserData, TUser } from '../interfaces';
+
 interface IError {
   code: string;
 }
@@ -149,9 +149,8 @@ export const signOutUser = async () => {
 // ===================================================
 // Observador de eventos de mudança de estado de login:
 // ===================================================
-export const onAuthStateChangedListener = (
-  callback: (arg: object | null) => void,
-) => onAuthStateChanged(auth, callback);
+export const onAuthStateChangedListener = (callback: (arg: TUser) => void) =>
+  onAuthStateChanged(auth, callback as any);
 // ==========================================
 // Obtém todos os documentos de uma coleção:
 // ==========================================

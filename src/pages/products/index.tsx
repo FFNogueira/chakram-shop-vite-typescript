@@ -11,7 +11,7 @@ import ProductList from '../../components/product-list';
 // serviço Firestore:
 import { getAllDocs } from '../../services/firebase';
 // interfaces de tipo:
-import { ItemList, IErrorData } from '../../services/interfaces';
+import { ItemList } from '../../services/interfaces';
 
 function Products() {
   // Variáveis de estado:
@@ -25,12 +25,12 @@ function Products() {
       // tenta obter as listas de produtos:
       const listsData = await getAllDocs('categories');
       // se obteve os dados sem erros:
-      if (!(listsData as IErrorData).errors) {
+      if (!('errors' in listsData)) {
         // carrege os produtos na página:
-        setItemsLists(listsData as ItemList[]);
+        setItemsLists(listsData);
         // se deseja fazer scroll para uma categoria de produto específica:
         if (hash !== '') {
-          // espera 300ms (carregamento dos produtos na página):
+          // espera 200ms (carregamento dos produtos na página):
           setTimeout(() => {
             const productCategory = document.querySelector(hash);
             if (productCategory) {
