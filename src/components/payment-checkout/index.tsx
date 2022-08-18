@@ -66,8 +66,8 @@ function PaymentCheckout(props: IProps) {
         payment_method: {
           card: elements.getElement(CardElement) || { token: '' },
           billing_details: {
-            name: userData?.displayName || '',
-            email: userData?.email || '',
+            name: userData?.displayName || 'Anonymous',
+            email: userData?.email || 'Anonymous',
           },
         },
       });

@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "compile": "tsc"
   },
   "dependencies": {
     "@stripe/react-stripe-js": "^1.10.0",

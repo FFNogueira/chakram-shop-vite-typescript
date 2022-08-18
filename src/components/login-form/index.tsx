@@ -25,7 +25,7 @@ function LoginForm(props: SignProps) {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
 
-  const handleGoogleLogin = async () => {
+  const handleGoogleLogin = React.useCallback(async () => {
     try {
       setPointerEvents('none');
       // tenta fazer login usando conta google:
@@ -47,31 +47,34 @@ function LoginForm(props: SignProps) {
     } finally {
       setPointerEvents('all');
     }
-  };
+  }, []);
 
-  const handleEmailAndPasswordLogin = async (event: React.FormEvent) => {
-    try {
-      event.preventDefault();
-      setPointerEvents('none');
-      sendToast('loading', 'Logando...');
-      // tenta fazer login usando email e senha:
-      const loginData = await signInUsingEmailandPassword(email, password);
-      // se houve algum erro:
-      if ('errors' in loginData) {
-        sendToast('error', loginData.errors[0]);
+  const handleEmailAndPasswordLogin = React.useCallback(
+    async (event: React.FormEvent) => {
+      try {
+        event.preventDefault();
+        setPointerEvents('none');
+        sendToast('loading', 'Logando...');
+        // tenta fazer login usando email e senha:
+        const loginData = await signInUsingEmailandPassword(email, password);
+        // se houve algum erro:
+        if ('errors' in loginData) {
+          sendToast('error', loginData.errors[0]);
+        }
+        // Se deu tudo certo:
+        else {
+          sendToast('success', 'Logado com sucesso!', 3000);
+          // redirecionar para outra página:
+          navigate(prevPath as string, { state: { data } });
+        }
+      } catch (err) {
+        console.log('*ERRO:*', err);
+      } finally {
+        setPointerEvents('all');
       }
-      // Se deu tudo certo:
-      else {
-        sendToast('success', 'Logado com sucesso!', 3000);
-        // redirecionar para outra página:
-        navigate(prevPath as string, { state: { data } });
-      }
-    } catch (err) {
-      console.log('*ERRO:*', err);
-    } finally {
-      setPointerEvents('all');
-    }
-  };
+    },
+    [password, email],
+  );
 
   // Executa sempre que o componente é renderizado:
   return (

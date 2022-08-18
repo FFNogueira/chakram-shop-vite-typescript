@@ -9,6 +9,8 @@ import {
   createUserWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
+  AuthError,
+  AuthErrorCodes,
 } from 'firebase/auth';
 // importa os serviços da Firestore Database:
 // Firestore + referenciador de documentos (doc) + funções CRUD
@@ -26,10 +28,6 @@ import firebaseConfig from './firebase-config';
 import validations from '../../modules/validations';
 // interfaces de tipo:
 import { ItemList, IUserData, TUser } from '../interfaces';
-
-interface IError {
-  code: string;
-}
 
 // =================================
 // Inicializa e configura o Firebase:
@@ -71,7 +69,7 @@ export const signInUsingEmailandPassword = async (
     return userData;
   } catch (err) {
     // console.log(err);
-    if ((err as IError).code?.indexOf('user-not-found') >= 0) {
+    if ((err as AuthError).code === AuthErrorCodes.USER_DELETED) {
       return { errors: ['usuário não registrado!'] };
     }
     return { errors: ['e-mail/senha incorretos!'] };
@@ -97,7 +95,7 @@ export const registerUsingEmailAndPassword = async (
     return userData;
   } catch (err) {
     // console.log(err);
-    if ((err as IError).code?.indexOf('email-already-in-use') >= 0) {
+    if ((err as AuthError).code === AuthErrorCodes.EMAIL_EXISTS) {
       return { errors: ['este e-mail já está em uso!'] };
     }
     return { errors: ['Erro ao efetuar registro!'] };

@@ -23,60 +23,63 @@ function RegisterForm(props: SignProps) {
   const [password, setPassword] = React.useState('');
   const [username, setUsername] = React.useState('');
 
-  const handleEmailAndPasswordRegister = async (event: React.FormEvent) => {
-    try {
-      event.preventDefault();
-      setPointerEvents('none');
-      sendToast('loading', 'Registrando...');
-      // tenta fazer login usando email e senha:
-      const registerData = await registerUsingEmailAndPassword(
-        email,
-        password,
-        username,
-      );
-      // se houve algum erro:
-      if ('errors' in registerData) {
-        if (registerData.errors.length > 1) {
-          // enviar toast com 2 ou mais erros!!
-          sendToast(
-            'error',
-            <>
-              {registerData.errors.map((e) => (
-                <p key={e}>
-                  <span>⇛</span> {e}
-                </p>
-              ))}
-            </>,
-          );
-        } else {
-          // enviar toast com apenas 1 erro!!
-          sendToast('error', registerData.errors[0]);
+  const handleEmailAndPasswordRegister = React.useCallback(
+    async (event: React.FormEvent) => {
+      try {
+        event.preventDefault();
+        setPointerEvents('none');
+        sendToast('loading', 'Registrando...');
+        // tenta fazer login usando email e senha:
+        const registerData = await registerUsingEmailAndPassword(
+          email,
+          password,
+          username,
+        );
+        // se houve algum erro:
+        if ('errors' in registerData) {
+          if (registerData.errors.length > 1) {
+            // enviar toast com 2 ou mais erros!!
+            sendToast(
+              'error',
+              <>
+                {registerData.errors.map((e) => (
+                  <p key={e}>
+                    <span>⇛</span> {e}
+                  </p>
+                ))}
+              </>,
+            );
+          } else {
+            // enviar toast com apenas 1 erro!!
+            sendToast('error', registerData.errors[0]);
+          }
         }
-      }
-      // Se deu tudo certo (sem erros):
-      else {
-        // tente criar um documento na coleção 'users'...
-        // ...(apenas se este usuário...
-        // ...já não esiver cadastrado):
-        const doc = await createUserDocument(registerData.user, username);
-        // se houve erros na etapa anterior:
-
-        if ('errors' in doc) {
-          sendToast('error', doc.errors[0]);
-        }
-        // Se deu tudo certo:
+        // Se deu tudo certo (sem erros):
         else {
-          sendToast('success', 'Registro efetuado!', 3000);
-          // redireciona para outra página:
-          navigate(prevPath as string, { state: { data } });
+          // tente criar um documento na coleção 'users'...
+          // ...(apenas se este usuário...
+          // ...já não esiver cadastrado):
+          const doc = await createUserDocument(registerData.user, username);
+          // se houve erros na etapa anterior:
+
+          if ('errors' in doc) {
+            sendToast('error', doc.errors[0]);
+          }
+          // Se deu tudo certo:
+          else {
+            sendToast('success', 'Registro efetuado!', 3000);
+            // redireciona para outra página:
+            navigate(prevPath as string, { state: { data } });
+          }
         }
+      } catch (err) {
+        console.log('*ERRO:*', err);
+      } finally {
+        setPointerEvents('all');
       }
-    } catch (err) {
-      console.log('*ERRO:*', err);
-    } finally {
-      setPointerEvents('all');
-    }
-  };
+    },
+    [email, password, username],
+  );
 
   return (
     <FormContainer action="" onSubmit={handleEmailAndPasswordRegister}>
