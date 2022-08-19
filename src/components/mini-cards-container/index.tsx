@@ -1,16 +1,13 @@
 import React from 'react';
+// subcomponente:
+import MiniCard from '../mini-card';
 // estilo deste componente:
 import { MiniCardsContainer } from './style';
 // interfaces de tipo:
-interface Item {
-  itemName: string;
-  imgURL?: string;
-  units?: number;
-  unitPrice?: number;
-}
+import { ICartItem } from '../../services/interfaces';
 
 interface IProps {
-  cartItens: Item[];
+  cartItens: ICartItem[];
 }
 
 function CartMiniCards(props: IProps) {
@@ -19,13 +16,7 @@ function CartMiniCards(props: IProps) {
     <MiniCardsContainer>
       {cartItens.length ? (
         cartItens.map((item) => (
-          <div key={item.itemName} className="mini-card">
-            <img src={item.imgURL} alt={item.itemName} />
-            <div className="mini-card-info">
-              <p>{item.itemName}</p>
-              <p>{`${item.units} x R$${item.unitPrice}`}</p>
-            </div>
-          </div>
+          <MiniCard key={item.itemName} cartItem={item} />
         ))
       ) : (
         <p className="empty-cart">carrinho vazio</p>

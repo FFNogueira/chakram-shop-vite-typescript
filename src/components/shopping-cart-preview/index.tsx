@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 // estilos deste componente:
 import { ShoppingCartContainer } from './style';
 // componentes:
-import CartMiniCards from '../cart-mini-cards';
+import CartMiniCards from '../mini-cards-container';
 // Reselector para a variável de estado global:
 import { selectShoppingCart } from '../../services/store/shopping-cart/selector';
 
